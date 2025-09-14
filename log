@@ -24,3 +24,9 @@ hashmap.c:190:5: error: suggest parentheses around assignment used as truth valu
      ^~
 cc1.exe: all warnings being treated as errors
 549d77c
+Sun, Sep 14, 2025  8:00:35 PM: 
+ hashmap.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+ tests:  17|0
+total_score: 70/70
+e1194cc

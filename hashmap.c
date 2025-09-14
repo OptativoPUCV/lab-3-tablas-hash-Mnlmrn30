@@ -42,50 +42,53 @@ int is_equal(void* key1, void* key2){
 void insertMap(HashMap * map, char * key, void * value) {
     if (map == NULL || key == NULL) return;
     long idx = hash(key, map->capacity);
+    if (idx < 0) idx = (idx % map->capacity + map->capacity) % map->capacity; // por si hash negativo
     long inicio = idx;
     long firstFree = -1;
 
-    while(1){
+    while (1) {
         Pair *slot = map->buckets[idx];
-        if(slot == NULL) {
+
+        if (slot == NULL) {
             long destino = (firstFree != -1) ? firstFree : idx;
-            if(map->buckets[destino] == NULL){
+            if (map->buckets[destino] == NULL) {
                 Pair *p = createPair(key, value);
-                if(!p) return;
+                if (!p) return;
                 map->buckets[destino] = p;
-            } else {
-                map ->buckets[destino]->key = key;
+            } else { 
+                map->buckets[destino]->key = key;
                 map->buckets[destino]->value = value;
             }
             map->size++;
             map->current = destino;
-            if(map->size * 10 > map->capacity * 7) enlarge(map);
+            if (map->size * 10 > map->capacity * 7) enlarge(map);
             return;
         }
 
-        if(slot->key == NULL){
-            if(firstFree == -1) firstFree = idx;
-        } else if (is_equal(slot->key, key)){
+        if (slot->key == NULL) {
+            if (firstFree == -1) firstFree = idx;  
+        } else if (is_equal(slot->key, key)) {
             map->current = idx;
-            return;
         }
-        idx = (idx + 1) & map->capacity;
-        if (idx == inicio){
-            if (firstFree  != 1){
+        idx = (idx + 1) % map->capacity;
+
+        if (idx == inicio) {
+            if (firstFree != -1) {
                 long destino = firstFree;
-                if (map->buckets[destino] == NULL){
+                if (map->buckets[destino] == NULL) {
                     Pair *p = createPair(key, value);
-                    if(!p) return;
+                    if (!p) return;
                     map->buckets[destino] = p;
                 } else {
-                    map ->buckets[destino]->key = key;
+                    map->buckets[destino]->key = key;    
                     map->buckets[destino]->value = value;
                 }
-                map -> size++;
-                map-> current = destino;
-                if(map->size * 10 > map->capacity * 7) enlarge(map);
+                map->size++;
+                map->current = destino;
+                if (map->size * 10 > map->capacity * 7) enlarge(map);
+            } else {
+                return;
             }
-            return;
         }
     }
 }
@@ -187,7 +190,7 @@ Pair * firstMap(HashMap * map) {
 
 
 Pair * nextMap(HashMap * map) {
-    if (map = NULL || map ->buckets == NULL || map->capacity <= 0) return NULL;
+    if (map == NULL || map ->buckets == NULL || map->capacity <= 0) return NULL;
     long start = (map ->current < 0) ? 0 : map -> current + 1;
 
     for (long k = start; k < map->capacity; k++){
