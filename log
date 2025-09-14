@@ -1,0 +1,14 @@
+Sun, Sep 14, 2025  6:12:07 PM: 
+ hashmap.c | 136 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 130 insertions(+), 6 deletions(-)
+Compilation failed
+In file included from test.c:4:0:
+hashmap.c: In function 'nextMap':
+hashmap.c:190:13: error: assignment makes pointer from integer without a cast [-Werror=int-conversion]
+     if (map = NULL || map ->buckets == NULL || map->capacity <= 0) return NULL;
+             ^
+hashmap.c:190:5: error: suggest parentheses around assignment used as truth value [-Werror=parentheses]
+     if (map = NULL || map ->buckets == NULL || map->capacity <= 0) return NULL;
+     ^~
+cc1.exe: all warnings being treated as errors
+eeef3b7
