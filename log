@@ -12,3 +12,15 @@ hashmap.c:190:5: error: suggest parentheses around assignment used as truth valu
      ^~
 cc1.exe: all warnings being treated as errors
 eeef3b7
+Sun, Sep 14, 2025  6:13:23 PM: 
+Compilation failed
+In file included from test.c:4:0:
+hashmap.c: In function 'nextMap':
+hashmap.c:190:13: error: assignment makes pointer from integer without a cast [-Werror=int-conversion]
+     if (map = NULL || map ->buckets == NULL || map->capacity <= 0) return NULL;
+             ^
+hashmap.c:190:5: error: suggest parentheses around assignment used as truth value [-Werror=parentheses]
+     if (map = NULL || map ->buckets == NULL || map->capacity <= 0) return NULL;
+     ^~
+cc1.exe: all warnings being treated as errors
+549d77c
